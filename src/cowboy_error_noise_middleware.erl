@@ -33,22 +33,23 @@
 %% API.
 -export([execute/2]).
 
--spec execute(Request, Environment) -> {ok, Request, Environment}
+-spec execute(Request, Environment) -> {ok, Request, Environment} | {error, ErrorCode, Request}
     when
         Request :: cowboy_req:req(),
-        Environment :: cowboy_middleware:env().
+        Environment :: cowboy_middleware:env(),
+        ErrorCode :: non_neg_integer().
 execute(Request, Environment) ->
     ErrorCode = proplists:get_value(noise_error_code, Environment, 503),
     ErrorContentType = proplists:get_value(noise_error_content_type, Environment, <<"text/plain; charset=utf-8">>),
     ErrorBody = proplists:get_value(noise_error_body, Environment, <<>>),
-    ErrorPercent = proplists:get_value(noise_error_percent, Environment, 1.0),
-    case random:uniform() of
+    ErrorPercent = proplists:get_value(noise_error_percent, Environment, 100),
+    Random = crypto:rand_uniform(0, 100000) / 1000.0,
+    case Random of
         X when X =< ErrorPercent ->
-            {ok, Request2} = cowboy_req:reply(ErrorCode, [
+            {halt, cowboy_req:reply(ErrorCode, [
                     {<<"content-type">>, ErrorContentType},
                     {<<"retry-after">>, <<"0">>}
-                ], ErrorBody, Request),
-            {halt, Request2};
+                ], ErrorBody, Request)};
 
         _Otherwise ->
             {ok, Request, Environment}
