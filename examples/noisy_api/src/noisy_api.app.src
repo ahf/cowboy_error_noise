@@ -1,0 +1,14 @@
+{application, noisy_api, [
+    {description, ""},
+    {vsn, "1.0.0"},
+    {modules, []},
+    {registered, []},
+    {applications, [
+        kernel,
+        cowboy,
+        cowboy_error_noise,
+        stdlib
+    ]},
+    {mod, {noisy_api_app, []}},
+    {env, []}
+]}.
