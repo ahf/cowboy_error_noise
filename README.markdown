@@ -2,7 +2,8 @@ Cowboy Error Noise
 ==================
 
 This [Cowboy](https://github.com/ninenines/cowboy) middleware allows you to add
-random failure into your API which forces your client's to handle errors better.
+random failure into your API which forces your client's to handle API errors
+more gracefully.
 
 Have a look at the example in the [examples/](examples/) directory.
 
