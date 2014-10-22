@@ -19,6 +19,7 @@ Add `cowboy_error_noise_middleware` to your `middlewares` configuration for cowb
 
             %% API Noise.
             {noise_error_percent, 33.333},
+            {noise_error_code, 503},
             {noise_error_body, <<"Ugh! You should see this message 1/3 of the time.">>},
             {noise_error_content_type, <<"text/plain; charset=utf-8">>}
         ]},
