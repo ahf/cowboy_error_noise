@@ -1,0 +1,11 @@
+{application, cowboy_error_noise, [
+    {description, "Add noise to your HTTP requests"},
+    {vsn, "0.1.0"},
+    {modules, []},
+    {registered, []},
+    {applications, [
+        crypto,
+        kernel,
+        stdlib
+    ]}
+]}.
